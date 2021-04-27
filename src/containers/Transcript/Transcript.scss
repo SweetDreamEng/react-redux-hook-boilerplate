@@ -1,0 +1,65 @@
+.transcript {
+  font-size: 18px;
+  margin-top: 26px;
+  cursor: pointer;
+
+  &__row {
+    padding: 15px 0;
+
+    .time {
+      width: 100px;
+    }
+
+    .highlight {
+      background: #ffd54f
+    }
+
+    &--even {
+      .time {
+        color: #1A99F6;
+      }
+
+      .text {
+        border-left: solid 2px #0D77C6;
+        padding-left: 9px;
+        color: #556C86;
+
+        .word {
+          &:hover, &.active {
+            background: rgba(26, 153, 246, 0.25);
+            border-radius: 4px;
+          }
+        }
+      }
+
+      &:hover, &.active {
+        background: rgba(26, 153, 246, 0.05);
+      }
+    }
+
+    &--odd {
+      padding-left: 100px;
+
+      .time {
+        color: #A68FEA;
+      }
+
+      .text {
+        border-left: solid 2px #8868E9;
+        padding-left: 9px;
+        color: #354053;
+
+        .word {
+          &:hover, &.active {
+            background: rgba(50, 30, 112, 0.25);
+            border-radius: 4px;
+          }
+        }
+      }
+
+      &:hover, &.active {
+        background: rgba(50, 30, 112, 0.05);
+      }
+    }
+  }
+}

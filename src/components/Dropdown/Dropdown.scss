@@ -1,0 +1,15 @@
+.apollo-dropdown {
+  & > button.btn.btn-secondary {
+    background: transparent;
+    border: none;
+    color: #556C86;
+    line-height: 1.4;
+
+    &:hover, &:focus, &:active {
+      box-shadow: none !important;
+      background: transparent;
+      border: none;
+      color: #028BE6;
+    }
+  }
+}

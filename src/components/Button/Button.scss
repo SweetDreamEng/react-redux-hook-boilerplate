@@ -1,0 +1,27 @@
+.apollo-btn.btn {
+  background-color: #fdfefe;
+  color: #556c86;
+  border-color: #d0d9e2;
+  line-height: 1.4;
+
+  &.share {
+    display: flex;
+    align-items: center;
+
+    &:before {
+      margin-right: 5px;
+      display: block;
+      content: "";
+      width: 15px;
+      height: 12px;
+      background: url('/images/share.png') center no-repeat;
+    }
+
+    &:hover, &:focus, &:active, &:not(:disabled):not(.disabled):active {
+      background: none;
+      box-shadow: none !important;
+      color: #028BE6;
+      border-color: #028BE6;
+    }
+  }
+}

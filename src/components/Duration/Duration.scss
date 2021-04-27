@@ -1,0 +1,20 @@
+.apollo-duration {
+  margin-top: 18px;
+  padding: 0 8px;
+  min-width: 84px;
+  width: max-content;
+  height: 20px;
+  border-radius: 5px;
+  background-color: #EFF3F6;
+  border-color: #979797;
+  font-size: 12px;
+  color: #7E8FA5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+
+  .audio-position {
+    color: #354053;
+  }
+}
