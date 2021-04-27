@@ -3,20 +3,19 @@ import { requestSuccess, requestFail } from 'redux/api/request';
 import * as CONSTANTS from './constants';
 
 const getInitialState = () => {
-  let authRestore = JSON.parse(localStorage.getItem('auth_data') || null);
-  return authRestore
-    ? {
-        token: authRestore.token,
-        me: authRestore.info,
-        status: 'INIT',
-        error: null,
-      }
-    : {
-        token: null,
-        me: null,
-        status: 'INIT',
-        error: null,
-      };
+  return {
+    user: null,
+    users: [],
+    status: 'INIT',
+    params: {
+      count: 0,
+      previous: null,
+      next: null,
+      page_size: 10,
+      page: 1,
+    },
+    report: null,
+  };
 };
 
 // ------------------------------------
@@ -24,48 +23,87 @@ const getInitialState = () => {
 // ------------------------------------
 export default handleActions(
   {
-    [requestSuccess(CONSTANTS.AUTH_LOGIN)]: (state, { payload }) => ({
+    [requestSuccess(CONSTANTS.GET_USER)]: (state, { payload }) => ({
       ...state,
-      token: payload.token,
-      status: requestSuccess(CONSTANTS.AUTH_LOGIN),
-      me: payload.info,
+      status: requestSuccess(CONSTANTS.GET_USER),
+      user: payload,
+      error: null,
     }),
 
-    [requestFail(CONSTANTS.AUTH_LOGIN)]: (state, { payload }) => ({
+    [requestFail(CONSTANTS.GET_USER)]: (state, { payload }) => ({
       ...state,
-      token: null,
-      status: requestFail(CONSTANTS.AUTH_LOGIN),
-      me: null,
+      status: requestFail(CONSTANTS.GET_USER),
       error: payload,
     }),
 
-    [CONSTANTS.AUTH_LOGOUT]: (state, { payload }) => ({
+    [requestSuccess(CONSTANTS.GET_USERS)]: (state, { payload }) => ({
       ...state,
-      token: null,
-      status: CONSTANTS.AUTH_LOGOUT,
-      me: null,
+      status: requestSuccess(CONSTANTS.GET_USERS),
+      users: payload.results,
+      params: {
+        ...state.params,
+        ...omit(payload, 'results'),
+      },
       error: null,
     }),
 
-    [requestSuccess(CONSTANTS.AUTH_SIGNUP)]: (state, { payload }) => ({
+    [requestFail(CONSTANTS.GET_USERS)]: (state, { payload }) => ({
       ...state,
-      status: requestSuccess(AUTH_SIGNUP),
-      error: null,
-    }),
-
-    [requestFail(CONSTANTS.AUTH_SIGNUP)]: (state, { payload }) => ({
-      ...state,
-      token: null,
-      status: requestFail(CONSTANTS.AUTH_SIGNUP),
-      me: null,
+      status: requestFail(CONSTANTS.GET_USERS),
       error: payload,
     }),
 
-    [requestSuccess(CONSTANTS.SAVE_PROFILE)]: (state, { payload }) => ({
+    [requestSuccess(CONSTANTS.CREATE_USER)]: (state, { payload }) => ({
       ...state,
-      status: requestSuccess(CONSTANTS.SAVE_PROFILE),
-      me: payload,
+      status: requestSuccess(CONSTANTS.CREATE_USER),
+      user: payload,
       error: null,
+    }),
+
+    [requestFail(CONSTANTS.CREATE_USER)]: (state, { payload }) => ({
+      ...state,
+      status: requestFail(CONSTANTS.CREATE_USER),
+      error: payload,
+    }),
+
+    [requestSuccess(CONSTANTS.UPDATE_USER)]: (state, { payload }) => ({
+      ...state,
+      status: requestSuccess(CONSTANTS.UPDATE_USER),
+      user: payload,
+      error: null,
+    }),
+
+    [requestFail(CONSTANTS.UPDATE_USER)]: (state, { payload }) => ({
+      ...state,
+      status: requestFail(CONSTANTS.UPDATE_USER),
+      error: payload,
+    }),
+
+    [requestSuccess(CONSTANTS.DELETE_USER)]: (state, { payload }) => ({
+      ...state,
+      status: requestSuccess(CONSTANTS.DELETE_USER),
+      users: reject(state.users, { id: payload.id }),
+      params: {
+        ...state.params,
+        count: Math.max(state.params.count - 1, 0),
+      },
+      error: null,
+    }),
+
+    [requestFail(CONSTANTS.DELETE_USER)]: (state, { payload }) => ({
+      ...state,
+      status: requestFail(CONSTANTS.DELETE_USER),
+      error: payload,
+    }),
+
+    [requestSuccess(CONSTANTS.GET_USER_REPORT)]: (state, { payload }) => ({
+      ...state,
+      report: payload,
+    }),
+
+    [requestFail(CONSTANTS.GET_USER_REPORT)]: (state) => ({
+      ...state,
+      report: null,
     }),
   },
   getInitialState(),

@@ -1,5 +1,6 @@
-export const AUTH_LOGIN = 'AUTH_LOGIN';
-export const AUTH_LOGOUT = 'AUTH_LOGOUT';
-export const AUTH_SIGNUP = 'AUTH_SIGNUP';
-export const GET_PROFILE = 'GET_PROFILE';
-export const SAVE_PROFILE = 'SAVE_PROFILE';
+export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';
+export const CREATE_USER = 'CREATE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const GET_USER_REPORT = 'GET_USER_REPORT';
