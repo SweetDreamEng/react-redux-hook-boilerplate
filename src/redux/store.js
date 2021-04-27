@@ -12,10 +12,7 @@ const enhancers = []
 
 const sagaMiddleware = createSagaMiddleware()
 
-const middleware = [
-  sagaMiddleware,
-  routerMiddleware(history)
-]
+const middleware = [sagaMiddleware, routerMiddleware(history)]
 
 if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.devToolsExtension
@@ -25,16 +22,9 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-const composedEnhancers = compose(
-  applyMiddleware(...middleware),
-  ...enhancers
-)
+const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers)
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  composedEnhancers
-)
+const store = createStore(rootReducer, initialState, composedEnhancers)
 
 sagaMiddleware.run(sagas)
 

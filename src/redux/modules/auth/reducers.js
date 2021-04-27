@@ -1,9 +1,9 @@
-import { handleActions } from 'redux-actions';
-import { requestSuccess, requestFail } from 'redux/api/request';
-import * as CONSTANTS from './constants';
+import { handleActions } from 'redux-actions'
+import { requestSuccess, requestFail } from 'redux/api/request'
+import * as CONSTANTS from './constants'
 
 const getInitialState = () => {
-  let authRestore = JSON.parse(localStorage.getItem('auth_data') || null);
+  let authRestore = JSON.parse(localStorage.getItem('auth_data') || null)
   return authRestore
     ? {
         token: authRestore.token,
@@ -16,8 +16,8 @@ const getInitialState = () => {
         me: null,
         status: 'INIT',
         error: null,
-      };
-};
+      }
+}
 
 // ------------------------------------
 // Reducer
@@ -49,7 +49,7 @@ export default handleActions(
 
     [requestSuccess(CONSTANTS.AUTH_SIGNUP)]: (state, { payload }) => ({
       ...state,
-      status: requestSuccess(AUTH_SIGNUP),
+      status: requestSuccess(CONSTANTS.AUTH_SIGNUP),
       error: null,
     }),
 
@@ -69,4 +69,4 @@ export default handleActions(
     }),
   },
   getInitialState(),
-);
+)

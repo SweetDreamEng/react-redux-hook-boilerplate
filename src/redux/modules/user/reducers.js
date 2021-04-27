@@ -1,6 +1,7 @@
-import { handleActions } from 'redux-actions';
-import { requestSuccess, requestFail } from 'redux/api/request';
-import * as CONSTANTS from './constants';
+import { handleActions } from 'redux-actions'
+import { requestSuccess, requestFail } from 'redux/api/request'
+import * as CONSTANTS from './constants'
+import { omit, reject } from 'lodash'
 
 const getInitialState = () => {
   return {
@@ -15,8 +16,8 @@ const getInitialState = () => {
       page: 1,
     },
     report: null,
-  };
-};
+  }
+}
 
 // ------------------------------------
 // Reducer
@@ -107,4 +108,4 @@ export default handleActions(
     }),
   },
   getInitialState(),
-);
+)

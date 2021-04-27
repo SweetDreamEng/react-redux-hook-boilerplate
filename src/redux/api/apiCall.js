@@ -11,44 +11,40 @@ export default ({
   success,
   fail,
   payloadOnSuccess,
-  payloadOnFail
-}) => function* (action) {
-  const {
-    body,
-    params,
-    success: successCallback,
-    fail: failCallback
-  } = (action.payload || {})
+  payloadOnFail,
+}) =>
+  function* (action) {
+    const { body, params, success: successCallback, fail: failCallback } = action.payload || {}
 
-  try {
-    yield put({
-      type: requestPending(type)
-    })
+    try {
+      yield put({
+        type: requestPending(type),
+      })
 
-    const res = yield call(axios.request, {
-      url: typeof path === 'function' ? path(action) : path,
-      method: method.toLowerCase(),
-      headers,
-      data: body,
-      params
-    })
+      const res = yield call(axios.request, {
+        url: typeof path === 'function' ? path(action) : path,
+        method: method.toLowerCase(),
+        headers,
+        data: body,
+        params,
+      })
 
-    successCallback && successCallback(res)
-    success && success(res, action)
+      successCallback && successCallback(res)
+      success && success(res, action)
 
-    yield put({
-      type: requestSuccess(type),
-      payload: payloadOnSuccess ? payloadOnSuccess(res.data, action) : res.data
-    })
-  } catch (err) {
-    const errRes = get(err, 'response', err)
+      yield put({
+        type: requestSuccess(type),
+        payload: payloadOnSuccess ? payloadOnSuccess(res.data, action) : res.data,
+      })
+    } catch (err) {
+      const errRes = get(err, 'response', err)
 
-    failCallback && failCallback(errRes)
-    fail && fail(errRes)
+      failCallback && failCallback(errRes)
+      fail && fail(errRes)
 
-    yield put({
-      type: requestFail(type),
-      payload: payloadOnFail ? payloadOnFail(errRes, action) : errRes
-    })
+      yield put({
+        type: requestFail(type),
+        payload: payloadOnFail ? payloadOnFail(errRes, action) : errRes,
+      })
+    }
   }
-}
