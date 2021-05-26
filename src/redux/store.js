@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory as createHistory } from 'history'
 import rootReducer from './reducers'
 import sagas from './sagas'
+import logger from 'redux-logger'
 
 export const history = createHistory()
 
@@ -22,7 +23,11 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers)
+const composedEnhancers = compose(
+  applyMiddleware(...middleware),
+  ...enhancers,
+  applyMiddleware(logger),
+)
 
 const store = createStore(rootReducer, initialState, composedEnhancers)
 
